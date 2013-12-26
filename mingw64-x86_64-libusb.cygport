@@ -27,11 +27,11 @@ src_install() {
 	cd ${B}
 	# we install only the userspace code; drivers should be installed
 	# and configured with the upstream installer
-	dobin libusb0.dll testlibusb*.exe
+	dobin libusb0.dll
 	newlib libusb.a libusb.dll.a
 
-	dodir ${CROSS_INCLUDEDIR}/libusb-0.1
-	sed -e '/windows\.h/d' src/lusb0_usb.h | dos2unix > ${D}${CROSS_INCLUDEDIR}/libusb-0.1/usb.h
+	insinto ${CROSS_INCLUDEDIR}/libusb-0.1
+	newins src/lusb0_usb.h usb.h
 
 	sed -e "s|\@PREFIX\@|${CROSS_PREFIX}|" ${S}/libusb-config > ${D}${CROSS_BINDIR}/libusb-config
 	chmod +x ${D}${CROSS_BINDIR}/libusb-config
